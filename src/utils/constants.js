@@ -3,8 +3,9 @@ export const STROOPS_PER_USDC = 10_000_000
 export const BASE_FEE = 100 // Stellar base fee in stroops
 
 // Configuration - All from environment variables
-export const TWITCH_CHANNEL = import.meta.env.VITE_TWITCH_CHANNEL
 export const RECIPIENT_NAME = import.meta.env.VITE_RECIPIENT_NAME
+// Twitch channel is automatically derived from recipient name (lowercase)
+export const TWITCH_CHANNEL = RECIPIENT_NAME ? RECIPIENT_NAME.toLowerCase() : ''
 export const NETWORK = import.meta.env.VITE_NETWORK
 export const HORIZON_URL = import.meta.env.VITE_HORIZON_URL
 export const SOROBAN_RPC_URL = import.meta.env.VITE_SOROBAN_RPC_URL
@@ -17,7 +18,6 @@ export const USDC_ISSUER = import.meta.env.VITE_USDC_ISSUER
 // Validate required environment variables
 export const validateEnv = () => {
   const required = [
-    'VITE_TWITCH_CHANNEL',
     'VITE_RECIPIENT_NAME',
     'VITE_NETWORK',
     'VITE_HORIZON_URL',
