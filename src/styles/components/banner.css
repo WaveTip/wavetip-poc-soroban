@@ -1,0 +1,107 @@
+/**
+ * Promotional Banner Styles
+ * 
+ * Thin dismissible banner with primary color background.
+ * Positioned at the top of the page.
+ */
+
+ .banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--wavetip-primary);
+    color: white;
+    padding: 10px var(--space-lg);
+    gap: var(--space-md);
+    position: relative;
+    z-index: var(--z-base);
+    min-height: 40px;
+  }
+  
+  .banner__content {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .banner__text {
+    font-size: 14px;
+    font-weight: 500;
+    text-align: center;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+  }
+ 
+  /* Logos layout */
+  .banner__logos {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+  }
+ 
+  .banner__logo {
+    display: block;
+    height: 24px;
+    width: auto;
+    /* Render external SVGs as white on colored banner */
+    filter: brightness(0) invert(1);
+  }
+ 
+  .banner__divider {
+    display: inline-block;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1;
+    opacity: 0.9;
+    margin: 0 2px;
+  }
+  
+  /* Close Button */
+  .banner__close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+    padding: 0;
+    flex-shrink: 0;
+    transition: all var(--transition-fast);
+    border-radius: var(--radius-sm);
+    line-height: 1;
+  }
+  
+  /**
+   * Responsive
+   */
+  @media (max-width: 640px) {
+    .banner {
+      padding: 8px var(--space-md);
+      min-height: 36px;
+    }
+  
+    .banner__text {
+      font-size: 13px;
+    }
+ 
+    .banner__logo {
+      height: 16px;
+    }
+ 
+    .banner__divider {
+      font-size: 14px;
+    }
+  
+    .banner__close {
+      width: 24px;
+      height: 24px;
+      font-size: 16px;
+    }
+  }
+  

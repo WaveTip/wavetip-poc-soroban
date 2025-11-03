@@ -1,0 +1,125 @@
+/**
+ * Stream Layout Styles
+ * 
+ * Responsive grid layout for Twitch player and chat.
+ * Full height containers with equal vertical sizing.
+ * No border radius - clean edges.
+ */
+
+ .stream-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  min-height: 600px;
+}
+
+.stream-grid .card {
+  padding: 0;
+  overflow: hidden;
+  border-radius: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.stream-iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+  flex: 1;
+}
+
+/* Modal styles */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal {
+  max-width: 520px;
+  width: 92%;
+  padding: var(--space-lg);
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-md);
+}
+
+.modal-footer {
+  margin-top: var(--space-lg);
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* Clickable stat counter (fees) */
+.stat-counter.clickable {
+  cursor: pointer;
+}
+
+.stat-counter.clickable:hover .stat-label,
+.stat-counter.clickable:hover .stat-value {
+  color: var(--wavetip-primary);
+}
+
+/* Wallet balance styling */
+.wallet-info .wallet-balance {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.wallet-info .wallet-balance .balance-label {
+  font-size: 12px;
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+.wallet-info .wallet-balance .balance-value {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--wavetip-primary);
+}
+
+/**
+ * Tablet: Stack to single column
+ */
+@media (max-width: 1024px) {
+  .stream-grid {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+
+  .stream-iframe {
+    height: 480px;
+  }
+}
+
+/**
+ * Mobile: Further compress for smaller screens
+ */
+@media (max-width: 640px) {
+  .stream-grid {
+    gap: var(--space-md);
+  }
+
+  .stream-iframe {
+    height: 360px;
+  }
+}
+
+/**
+ * Extra small devices: Minimum viable height
+ */
+@media (max-width: 480px) {
+  .stream-iframe {
+    height: 280px;
+  }
+}

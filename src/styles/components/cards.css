@@ -1,0 +1,47 @@
+/**
+ * Card Component Styles
+ *
+ * Reusable card wrapper for content sections.
+ * No border-radius for seamless stacking - rounded corners handled by container.
+ * Clean separation with borders, not visual "stacking".
+ */
+
+.card {
+  background: var(--bg-elevated);
+  border: var(--border-thin) solid var(--border-color);
+  border-radius: 0;
+  padding: var(--space-lg);
+  transition: all var(--transition-fast);
+}
+
+.card:hover {
+  border-color: var(--border-color);
+  box-shadow: none;
+}
+
+/* First card - rounded top */
+.card:first-of-type {
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+}
+
+/* Last card - rounded bottom */
+.card:last-of-type {
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+}
+
+/* Single card - fully rounded */
+.card:only-of-type {
+  border-radius: var(--radius-lg);
+}
+
+/* Middle cards - no radius */
+.card:not(:first-of-type):not(:last-of-type) {
+  border-radius: 0;
+  border-top: none;
+}
+
+/* Remove top border to merge adjacent cards */
+.card + .card {
+  border-top: none;
+  margin-top: calc(-1 * var(--border-width, 1px));
+}

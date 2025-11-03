@@ -1,0 +1,46 @@
+/**
+ * Stream Section Styles
+ * Twitch embed layouts and responsive behavior
+ */
+
+ .stream-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: var(--space-lg);
+    margin-bottom: var(--space-lg);
+  }
+  
+  .stream-grid .card {
+    padding: 0;
+    overflow: hidden;
+    background: var(--neutral-black);
+  }
+  
+  .stream-iframe {
+    width: 100%;
+    height: 480px;
+    border: none;
+    display: block;
+  }
+  
+  @media (max-width: 1024px) {
+    .stream-grid {
+      grid-template-columns: 1fr;
+    }
+  
+    .stream-iframe {
+      height: 360px;
+    }
+  }
+  
+  @media (max-width: 640px) {
+    .stream-grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-md);
+    }
+  
+    .stream-iframe {
+      height: 280px;
+    }
+  }
+  
