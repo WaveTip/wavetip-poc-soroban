@@ -217,6 +217,34 @@
   gap: 2px;
 }
 
+.wallet-address {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.address-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.address-code {
+  font-family: 'JetBrains Mono', 'SF Mono', Monaco, 'Courier New', monospace;
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.address-code--clickable {
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.address-code--clickable:hover {
+  text-decoration: underline;
+}
+
 .balance-label {
   font-size: 12px;
   font-weight: 600;

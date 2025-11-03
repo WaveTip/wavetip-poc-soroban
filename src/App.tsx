@@ -78,12 +78,24 @@ export function App() {
 
     if (result.success) {
       closeToast();
-      showToast(
-        SUCCESS_MESSAGES.TIP_SENT_TEMPLATE
-          .replace('{amount}', amount.toString())
-          .replace('{recipient}', STELLAR_CONFIG.RECIPIENT_NAME),
-        'success'
-      );
+
+      // Create explorer link if txHash is available
+      let messageWithLink = SUCCESS_MESSAGES.TIP_SENT_TEMPLATE
+        .replace('{amount}', amount.toString())
+        .replace('{recipient}', STELLAR_CONFIG.RECIPIENT_NAME);
+
+      if (result.txHash) {
+        const explorerUrl = `https://stellar.expert/explorer/${
+          STELLAR_CONFIG.NETWORK === 'testnet' ? 'testnet' : 'mainnet'
+        }/tx/${result.txHash}`;
+
+        messageWithLink = `${messageWithLink} <a href="${explorerUrl}" target="_blank" rel="noopener noreferrer">View transaction ↗</a>`;
+      }
+
+      showToast(messageWithLink, 'success', true);
+      setTimeout(() => {
+        closeToast();
+      }, 5000);
       setCustomAmount('');
     } else {
       closeToast();

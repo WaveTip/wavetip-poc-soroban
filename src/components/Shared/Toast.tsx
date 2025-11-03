@@ -66,9 +66,10 @@ function getToastTypeClass(type: ToastNotification['type']): string {
  * 
  * Renders a toast message with icon and type-specific styling.
  * Returns null when toast is not visible.
+ * Supports HTML content for links and rich formatting.
  * 
  * @param toast - Toast data (null or show=false = not displayed)
- * @param onClose - Callback to close toast (unused - for future interactivity)
+ * @param onClose - Callback to close toast
  * @returns Toast element or null if not visible
  */
 export function Toast({ toast, onClose }: ToastProps): JSX.Element | null {
@@ -105,7 +106,17 @@ export function Toast({ toast, onClose }: ToastProps): JSX.Element | null {
       <div className="toast-icon" aria-hidden="true">
         {TOAST_ICONS[toast.type]}
       </div>
-      <span className="toast-message">{toast.message}</span>
+      <div className="toast-message">
+        {/* Check if message contains HTML (has anchor tags) */}
+        {/<\/?a\b/i.test(toast.message) ? (
+          <div
+            dangerouslySetInnerHTML={{ __html: toast.message }}
+            style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}
+          />
+        ) : (
+          <span>{toast.message}</span>
+        )}
+      </div>
       <button
         type="button"
         className="toast-close"

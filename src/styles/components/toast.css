@@ -50,9 +50,16 @@
   }
   
   .toast-message {
-    flex: 1;
+    flex: 0 1 auto;
+    min-width: 0;
     line-height: 1.4;
     white-space: nowrap;
+  }
+
+  /* Allow wrapping when message contains links */
+  .toast-message > div {
+    white-space: normal;
+    word-wrap: break-word;
   }
 
   .toast-close {
@@ -69,5 +76,39 @@
 
   .toast-close:hover {
     color: var(--color-white);
+  }
+
+  /**
+   * Toast message link styles
+   */
+  .toast-message a {
+    color: inherit;
+    text-decoration: underline;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity var(--transition-fast);
+    margin-left: 4px;
+    white-space: nowrap;
+  }
+
+  .toast-message a:hover {
+    opacity: 0.8;
+  }
+
+  .toast-message a:active {
+    opacity: 0.9;
+  }
+
+  /* Ensure links are visible on all toast types */
+  .toast-success .toast-message a {
+    color: inherit;
+  }
+
+  .toast-error .toast-message a {
+    color: inherit;
+  }
+
+  .toast-info .toast-message a {
+    color: inherit;
   }
   

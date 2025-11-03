@@ -23,15 +23,17 @@ import type { Wallet, WalletCreationResult } from '../interfaces/wallet';
  * 
  * @returns Wallet creation result with status and messages
  */
-export async function createWallet(): Promise<WalletCreationResult> {
+export async function createWallet(onProgress?: (message: string) => void): Promise<WalletCreationResult> {
   const keypair = StellarSdk.Keypair.random();
   const messages: string[] = [];
 
   try {
     messages.push('Creating wallet');
+    onProgress && onProgress('Creating wallet…');
 
     // Fund via Friendbot
     messages.push('Funding account via Friendbot');
+    onProgress && onProgress('Funding account via Friendbot…');
     await fundViaFriendbot(keypair.publicKey());
 
     // Wait for account to be created on blockchain
@@ -39,15 +41,18 @@ export async function createWallet(): Promise<WalletCreationResult> {
 
     // Setup USDC trustline
     messages.push('Setting up USDC trustline');
+    onProgress && onProgress('Setting up USDC trustline…');
     await setupUSDCTrustline(keypair);
 
     // Send initial USDC from Bob
     if (STELLAR_CONFIG.BOB_SECRET_KEY) {
       messages.push('Sending initial USDC');
+      onProgress && onProgress('Sending initial USDC…');
       await sendInitialUSDC(keypair.publicKey());
     }
 
     messages.push('Wallet created successfully');
+    onProgress && onProgress('Wallet created successfully');
 
     return {
       success: true,

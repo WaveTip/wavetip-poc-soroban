@@ -19,7 +19,7 @@
  */
 
 import { BUTTON_CLASSES, CARD_CLASSES, SECTION_CLASSES, UI_LABELS } from '../constants/ui';
-import { formatBalance } from '../lib/formatters';
+import { formatBalance, truncateAddress } from '../lib/formatters';
 import type { Wallet } from '../interfaces/wallet';
 
 /**
@@ -106,6 +106,11 @@ export function WalletSection({
             <p className="balance">
               <span className="balance-label">{UI_LABELS.BALANCE_LABEL}:</span>
               <span className="balance-amount">{formatBalance(userBalance)} USDC</span>
+              {wallet?.publicKey && (
+                <span className="balance-address"> 
+                  (<code>{truncateAddress(wallet.publicKey)}</code>)
+                </span>
+              )}
             </p>
           </div>
           <button

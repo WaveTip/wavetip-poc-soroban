@@ -7,9 +7,10 @@
 
 import { CARD_CLASSES, UI_LABELS, BUTTON_CLASSES } from '../constants/ui';
 import { STELLAR_CONFIG } from '../constants/stellar';
+import { SUCCESS_MESSAGES } from '../constants/messages';
 import { useBalances } from '../hooks';
 import type { Wallet } from '../interfaces/wallet';
-import { formatBalance } from '../lib/formatters';
+import { formatBalance, truncateAddress } from '../lib/formatters';
 
 /**
  * Stream layout component with Twitch header, live stats, and wallet button
@@ -40,8 +41,12 @@ export function StreamLayout({ wallet, walletLoading, createWalletAsync, disconn
    */
   const handleCreateWallet = async () => {
     try {
-      showToast && showToast('Creating account…', 'info', true);
-    await createWalletAsync();
+      // persistent progress toast, updated per step
+      showToast && showToast('Creating wallet…', 'info', true);
+      await createWalletAsync((msg) => {
+        closeToast && closeToast();
+        showToast && showToast(msg, 'info', true);
+      });
       closeToast && closeToast();
       showToast && showToast('Account created successfully', 'success');
     } catch (e) {
@@ -55,6 +60,18 @@ export function StreamLayout({ wallet, walletLoading, createWalletAsync, disconn
    */
   const handleDisconnect = () => {
     disconnectWallet();
+  };
+
+  /** Copy current wallet address to clipboard */
+  const handleCopyAddress = async () => {
+    try {
+      if (wallet?.publicKey) {
+        await navigator.clipboard.writeText(wallet.publicKey);
+        showToast && showToast(SUCCESS_MESSAGES.ADDRESS_COPIED, 'success');
+      }
+    } catch {
+      // no-op
+    }
   };
 
   return (
@@ -139,6 +156,22 @@ export function StreamLayout({ wallet, walletLoading, createWalletAsync, disconn
               <div className="wallet-balance">
                 <span className="balance-label">Your Balance</span>
                 <span className="balance-value">${formatBalance(balances.user)}</span>
+              </div>
+              <div className="wallet-address">
+                <span className="balance-label">{UI_LABELS.ADDRESS_LABEL}</span>
+                <div className="address-row">
+                  <code
+                    className="address-code address-code--clickable"
+                    role="button"
+                    tabIndex={0}
+                    onClick={handleCopyAddress}
+                    onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleCopyAddress(); } }}
+                    aria-label={UI_LABELS.COPY_ADDRESS}
+                    title={UI_LABELS.COPY_ADDRESS}
+                  >
+                    {truncateAddress(wallet.publicKey)}
+                  </code>
+                </div>
               </div>
               <button
                 className={`${BUTTON_CLASSES.BTN} ${BUTTON_CLASSES.BTN_LOGOUT}`}

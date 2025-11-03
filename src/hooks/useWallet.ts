@@ -58,11 +58,11 @@ export function useWallet(): UseWalletReturn {
   }, []);
 
   // Create new wallet
-  const createWalletAsync = useCallback(async (): Promise<WalletCreationResult> => {
+  const createWalletAsync = useCallback(async (onProgress?: (message: string) => void): Promise<WalletCreationResult> => {
     setLoading(true);
 
     try {
-      const result = await createWallet();
+      const result = await createWallet(onProgress);
 
       if (result.success && result.publicKey && result.secretKey) {
         const newWallet: Wallet = {

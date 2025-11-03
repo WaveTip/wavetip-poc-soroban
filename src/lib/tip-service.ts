@@ -46,17 +46,24 @@ export async function sendTip(wallet: Wallet, amount: number): Promise<Transacti
     preparedTransaction.sign(keypair);
 
     const response = await sorobanServer.sendTransaction(preparedTransaction);
+    const txHash = response.hash; // Store hash early for error cases
 
     if (response.status === 'PENDING') {
-      const result = await waitForTransaction(sorobanServer, response.hash);
-      if (result.success) {
-        return {
-          success: true,
-          txHash: response.hash,
-          message: `Tip of ${amount} USDC sent successfully to ${STELLAR_CONFIG.RECIPIENT_NAME}`
-        };
+      try {
+        const result = await waitForTransaction(sorobanServer, txHash);
+        if (result.success) {
+          return {
+            success: true,
+            txHash: txHash,
+            message: `Tip of ${amount} USDC sent successfully to ${STELLAR_CONFIG.RECIPIENT_NAME}`
+          };
+        }
+        // If waitForTransaction returns an error, include txHash if available
+        return { ...result, txHash: result.txHash || txHash };
+      } catch (waitError) {
+        // If error occurs during wait, check if it's "Bad union switch" and include txHash
+        return handleContractError(waitError, amount, txHash);
       }
-      return result;
     }
 
     return {
@@ -109,17 +116,24 @@ export async function withdrawFees(wallet: Wallet): Promise<TransactionResult> {
     preparedTransaction.sign(keypair);
 
     const response = await sorobanServer.sendTransaction(preparedTransaction);
+    const txHash = response.hash; // Store hash early for error cases
 
     if (response.status === 'PENDING') {
-      const result = await waitForTransaction(sorobanServer, response.hash);
-      if (result.success) {
-        return {
-          success: true,
-          txHash: response.hash,
-          message: `Withdrawal of ${contractBalance.toFixed(2)} USDC successful`
-        };
+      try {
+        const result = await waitForTransaction(sorobanServer, txHash);
+        if (result.success) {
+          return {
+            success: true,
+            txHash: txHash,
+            message: `Withdrawal of ${contractBalance.toFixed(2)} USDC successful`
+          };
+        }
+        // If waitForTransaction returns an error, include txHash if available
+        return { ...result, txHash: result.txHash || txHash };
+      } catch (waitError) {
+        // If error occurs during wait, check if it's "Bad union switch" and include txHash
+        return handleWithdrawError(waitError, txHash);
       }
-      return result;
     }
 
     return {
@@ -208,15 +222,17 @@ async function waitForTransaction(
  * 
  * @param error - Error from contract call
  * @param amount - Tip amount that was attempted
+ * @param txHash - Optional transaction hash if available
  * @returns Formatted error result
  */
-function handleContractError(error: unknown, amount: number): TransactionResult {
+function handleContractError(error: unknown, amount: number, txHash?: string): TransactionResult {
   const message = error instanceof Error ? error.message : String(error);
 
   // Ignore "Bad union switch" - transaction likely succeeded
   if (message.includes('Bad union switch')) {
     return {
       success: true,
+      txHash: txHash,
       message: `Tip of ${amount} USDC sent successfully to ${STELLAR_CONFIG.RECIPIENT_NAME}`
     };
   }
@@ -273,15 +289,17 @@ function handleContractError(error: unknown, amount: number): TransactionResult 
  * Different error patterns than tips
  * 
  * @param error - Error from contract call
+ * @param txHash - Optional transaction hash if available
  * @returns Formatted error result
  */
-function handleWithdrawError(error: unknown): TransactionResult {
+function handleWithdrawError(error: unknown, txHash?: string): TransactionResult {
   const message = error instanceof Error ? error.message : String(error);
 
   // Ignore "Bad union switch" - transaction likely succeeded
   if (message.includes('Bad union switch')) {
     return {
       success: true,
+      txHash: txHash,
       message: 'Withdrawal successful'
     };
   }
