@@ -30,30 +30,22 @@ export function Banner(): JSX.Element | null {
       <div className="banner__content">
         <div className="banner__logos" aria-label="WaveTip and Stellar partnership">
           <img
-            src="/wavetip-icon.svg"
-            alt="WaveTip"
-            className="banner__logo"
+            src="/stellar-horizontal.svg"
+            alt="Stellar"
+            className="banner__logo banner__logo--stellar"
             height={24}
           />
           <span className="banner__divider" aria-hidden>
             ×
           </span>
           <img
-            src="/stellar-icon.svg"
-            alt="Stellar"
-            className="banner__logo banner__logo--stellar"
+            src="/wavetip-horizontal.svg"
+            alt="WaveTip"
+            className="banner__logo banner__logo--wavetip"
             height={24}
           />
         </div>
       </div>
-      <button
-        className="banner__close"
-        onClick={handleClose}
-        aria-label="Close banner"
-        type="button"
-      >
-        ✕
-      </button>
     </div>
   );
 }

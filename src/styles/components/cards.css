@@ -18,30 +18,3 @@
   border-color: var(--border-color);
   box-shadow: none;
 }
-
-/* First card - rounded top */
-.card:first-of-type {
-  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
-}
-
-/* Last card - rounded bottom */
-.card:last-of-type {
-  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
-}
-
-/* Single card - fully rounded */
-.card:only-of-type {
-  border-radius: var(--radius-lg);
-}
-
-/* Middle cards - no radius */
-.card:not(:first-of-type):not(:last-of-type) {
-  border-radius: 0;
-  border-top: none;
-}
-
-/* Remove top border to merge adjacent cards */
-.card + .card {
-  border-top: none;
-  margin-top: calc(-1 * var(--border-width, 1px));
-}

@@ -47,34 +47,26 @@
     /* Render external SVGs as white on colored banner */
     filter: brightness(0) invert(1);
   }
+
+  .banner__logo--stellar {
+    height: 24px;
+  }
+
+  .banner__logo--wavetip {
+    height: 32px;
+  }
+
+  .banner__logo--soroban {
+    height: 18px;
+  }
  
   .banner__divider {
     display: inline-block;
     font-size: 16px;
-    font-weight: 700;
+    font-weight: 500;
     line-height: 1;
     opacity: 0.9;
     margin: 0 2px;
-  }
-  
-  /* Close Button */
-  .banner__close {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 28px;
-    height: 28px;
-    background: transparent;
-    border: none;
-    color: white;
-    font-size: 18px;
-    font-weight: 700;
-    cursor: pointer;
-    padding: 0;
-    flex-shrink: 0;
-    transition: all var(--transition-fast);
-    border-radius: var(--radius-sm);
-    line-height: 1;
   }
   
   /**
@@ -96,12 +88,6 @@
  
     .banner__divider {
       font-size: 14px;
-    }
-  
-    .banner__close {
-      width: 24px;
-      height: 24px;
-      font-size: 16px;
     }
   }
   

@@ -88,8 +88,9 @@ export function App() {
         const explorerUrl = `https://stellar.expert/explorer/${
           STELLAR_CONFIG.NETWORK === 'testnet' ? 'testnet' : 'mainnet'
         }/tx/${result.txHash}`;
+        const shortTx = `${result.txHash.slice(0, 5)}....${result.txHash.slice(-5)}`;
 
-        messageWithLink = `${messageWithLink} <a href="${explorerUrl}" target="_blank" rel="noopener noreferrer">View transaction ↗</a>`;
+        messageWithLink = `${messageWithLink} <a href="${explorerUrl}" target="_blank" rel="noopener noreferrer">View transaction on explorer ${shortTx} ↗</a>`;
       }
 
       showToast(messageWithLink, 'success', true);
@@ -135,29 +136,28 @@ export function App() {
       <Banner />
 
       <div className="container">
-        {/* Stream with Twitch Header */}
-        <StreamLayout
-          wallet={wallet}
-          walletLoading={walletLoading}
-          createWalletAsync={createWalletAsync}
-          disconnectWallet={disconnectWallet}
-          onOpenFeesModal={() => setFeesModalOpen(true)}
-          showToast={showToast}
-          closeToast={closeToast}
-        />
-
-        {/* Tip Controls */}
-        {wallet && (
-          <TipButtons
-            loading={tipLoading}
+        <div className={LAYOUT_CLASSES.STREAM_SECTION}>
+          {/* Stream with Twitch Header */}
+          <StreamLayout
             wallet={wallet}
-            customAmount={customAmount}
-            onCustomAmountChange={setCustomAmount}
-            onSendTip={handleSendTip}
+            walletLoading={walletLoading}
+            createWalletAsync={createWalletAsync}
+            disconnectWallet={disconnectWallet}
+            showToast={showToast}
+            closeToast={closeToast}
           />
-        )}
 
-        {/* Admin Panel removed; now accessible via modal from header fees */}
+          {/* Tip Controls */}
+          {wallet && (
+            <TipButtons
+              loading={tipLoading}
+              wallet={wallet}
+              customAmount={customAmount}
+              onCustomAmountChange={setCustomAmount}
+              onSendTip={handleSendTip}
+            />
+          )}
+        </div>
 
         {/* Contract Information */}
         <ContractInfo />

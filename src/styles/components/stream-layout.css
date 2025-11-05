@@ -6,6 +6,23 @@
  * No border radius - clean edges.
  */
 
+.stream-section {
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 52px);
+}
+
+@media (max-width: 640px) {
+  .stream-section {
+    min-height: calc(100vh - 52px);
+  }
+}
+
+.stream-section .stream-grid {
+  flex: 1;
+  min-height: 0;
+}
+
  .stream-grid {
   display: grid;
   grid-template-columns: 2fr 1fr;

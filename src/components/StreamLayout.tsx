@@ -6,10 +6,11 @@
  */
 
 import { CARD_CLASSES, UI_LABELS, BUTTON_CLASSES } from '../constants/ui';
+import { useEffect, useRef, useState } from 'react';
 import { STELLAR_CONFIG } from '../constants/stellar';
 import { SUCCESS_MESSAGES } from '../constants/messages';
 import { useBalances } from '../hooks';
-import type { Wallet } from '../interfaces/wallet';
+import type { Wallet, WalletCreationResult } from '../interfaces/wallet';
 import { formatBalance, truncateAddress } from '../lib/formatters';
 
 /**
@@ -20,14 +21,13 @@ import { formatBalance, truncateAddress } from '../lib/formatters';
 interface StreamLayoutProps {
   wallet: Wallet | null;
   walletLoading: boolean;
-  createWalletAsync: () => Promise<unknown>;
+  createWalletAsync: (onProgress?: (message: string) => void) => Promise<WalletCreationResult>;
   disconnectWallet: () => void;
-  onOpenFeesModal?: () => void;
   showToast?: (message: string, type?: 'error' | 'info' | 'success' | 'warning', persistent?: boolean) => void;
   closeToast?: () => void;
 }
 
-export function StreamLayout({ wallet, walletLoading, createWalletAsync, disconnectWallet, onOpenFeesModal, showToast, closeToast }: StreamLayoutProps): JSX.Element {
+export function StreamLayout({ wallet, walletLoading, createWalletAsync, disconnectWallet, showToast, closeToast }: StreamLayoutProps): JSX.Element {
   const parentHost = typeof window !== 'undefined' ? window.location.hostname : 'localhost';
   const recipientName = STELLAR_CONFIG.RECIPIENT_NAME;
   const twitchChannel = STELLAR_CONFIG.TWITCH_CHANNEL;
@@ -36,6 +36,10 @@ export function StreamLayout({ wallet, walletLoading, createWalletAsync, disconn
   // Fetch balances for stats display (use wallet to get user balance)
   const { balances } = useBalances(wallet);
 
+  // Copy-to-clipboard UI state
+  const [copied, setCopied] = useState(false);
+  const copyResetTimeoutRef = useRef<number | null>(null);
+
   /**
    * Handle create wallet
    */
@@ -43,12 +47,17 @@ export function StreamLayout({ wallet, walletLoading, createWalletAsync, disconn
     try {
       // persistent progress toast, updated per step
       showToast && showToast('Creating wallet…', 'info', true);
-      await createWalletAsync((msg) => {
+      const result = await createWalletAsync((msg) => {
         closeToast && closeToast();
         showToast && showToast(msg, 'info', true);
       });
       closeToast && closeToast();
-      showToast && showToast('Account created successfully', 'success');
+      if (result && result.success) {
+        showToast && showToast('Account created successfully', 'success');
+      } else {
+        const errMsg = result && result.error ? result.error : 'Account creation failed';
+        showToast && showToast(errMsg, 'error');
+      }
     } catch (e) {
       closeToast && closeToast();
       showToast && showToast('Account creation failed', 'error');
@@ -68,11 +77,25 @@ export function StreamLayout({ wallet, walletLoading, createWalletAsync, disconn
       if (wallet?.publicKey) {
         await navigator.clipboard.writeText(wallet.publicKey);
         showToast && showToast(SUCCESS_MESSAGES.ADDRESS_COPIED, 'success');
+        setCopied(true);
+        if (copyResetTimeoutRef.current) {
+          window.clearTimeout(copyResetTimeoutRef.current);
+        }
+        copyResetTimeoutRef.current = window.setTimeout(() => setCopied(false), 1500);
       }
     } catch {
       // no-op
     }
   };
+
+  // Cleanup timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (copyResetTimeoutRef.current) {
+        window.clearTimeout(copyResetTimeoutRef.current);
+      }
+    };
+  }, []);
 
   return (
     <>
@@ -133,16 +156,6 @@ export function StreamLayout({ wallet, walletLoading, createWalletAsync, disconn
               <span className="stat-label">Tips</span>
               <span className="stat-value">${formatBalance(balances.recipient)}</span>
             </div>
-                <div
-                  className="stat-counter clickable"
-                  role="button"
-                  tabIndex={0}
-                  onClick={onOpenFeesModal}
-                  onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onOpenFeesModal && onOpenFeesModal(); } }}
-                >
-              <span className="stat-label">Fees</span>
-              <span className="stat-value">${formatBalance(balances.contract)}</span>
-                </div>
               </div>
             </div>
             </div>
@@ -160,17 +173,57 @@ export function StreamLayout({ wallet, walletLoading, createWalletAsync, disconn
               <div className="wallet-address">
                 <span className="balance-label">{UI_LABELS.ADDRESS_LABEL}</span>
                 <div className="address-row">
-                  <code
-                    className="address-code address-code--clickable"
-                    role="button"
-                    tabIndex={0}
-                    onClick={handleCopyAddress}
-                    onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleCopyAddress(); } }}
-                    aria-label={UI_LABELS.COPY_ADDRESS}
-                    title={UI_LABELS.COPY_ADDRESS}
+                  <a
+                    href={`https://stellar.expert/explorer/${STELLAR_CONFIG.NETWORK === 'testnet' ? 'testnet' : 'mainnet'}/account/${wallet.publicKey}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="address-code"
+                    aria-label="Open address in explorer"
+                    title="Open in explorer"
                   >
                     {truncateAddress(wallet.publicKey)}
-                  </code>
+                  </a>
+                  <button
+                    type="button"
+                    onClick={handleCopyAddress}
+                    aria-label={copied ? 'Copied' : UI_LABELS.COPY_ADDRESS}
+                    title={copied ? 'Copied' : UI_LABELS.COPY_ADDRESS}
+                    className={`address-copy-btn${copied ? ' is-copied' : ''}`}
+                  >
+                    {copied ? (
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth="1.5"
+                        stroke="currentColor"
+                        className="icon icon--copied"
+                        aria-hidden="true"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="m4.5 12.75 6 6 9-13.5"
+                        />
+                      </svg>
+                    ) : (
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth="1.5"
+                        stroke="currentColor"
+                        className="icon icon--copy"
+                        aria-hidden="true"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M16.5 8.25V6a2.25 2.25 0 0 0-2.25-2.25H6A2.25 2.25 0 0 0 3.75 6v8.25A2.25 2.25 0 0 0 6 16.5h2.25m8.25-8.25H18a2.25 2.25 0 0 1 2.25 2.25V18A2.25 2.25 0 0 1 18 20.25h-7.5A2.25 2.25 0 0 1 8.25 18v-1.5m8.25-8.25h-6a2.25 2.25 0 0 0-2.25 2.25v6"
+                        />
+                      </svg>
+                    )}
+                  </button>
                 </div>
               </div>
               <button

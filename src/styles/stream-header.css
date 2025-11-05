@@ -227,22 +227,41 @@
 .address-row {
   display: flex;
   align-items: center;
-  gap: var(--space-sm);
+  gap: var(--space-xs);
 }
 
 .address-code {
   font-family: 'JetBrains Mono', 'SF Mono', Monaco, 'Courier New', monospace;
-  font-size: 12px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+
+.address-code:hover {
+  color: var(--wavetip-primary);
+}
+
+/* Copy address button */
+.address-copy-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
   color: var(--text-secondary);
 }
 
-.address-code--clickable {
-  cursor: pointer;
-  text-decoration: none;
+.address-copy-btn:hover {
+  color: var(--wavetip-primary);
 }
 
-.address-code--clickable:hover {
-  text-decoration: underline;
+.address-copy-btn .icon {
+  width: 20px;
+  height: 20px;
 }
 
 .balance-label {

@@ -19,7 +19,7 @@ export const UI_LABELS = {
   CREATING_WALLET: 'Creating...',
   DISCONNECT_WALLET: 'Disconnect Wallet',
   COPY_ADDRESS: 'Copy',
-  ADDRESS_LABEL: 'Address',
+  ADDRESS_LABEL: 'Stellar Address',
   BALANCE_LABEL: 'USDC Balance',
 
   // Tip section
@@ -56,7 +56,8 @@ export const LAYOUT_CLASSES = {
   APP: 'app',
   CONTAINER: 'container',
   GRID_LAYOUT: 'grid-layout',
-  HEADER: 'app-header'
+  HEADER: 'app-header',
+  STREAM_SECTION: 'stream-section'
 } as const;
 
 /**
