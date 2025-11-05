@@ -22,7 +22,7 @@
     align-items: center;
     gap: var(--space-sm);
     min-width: 300px;
-    max-width: 500px;
+    max-width: 450px;
     box-shadow: var(--shadow-lg);
     pointer-events: none;
     border: var(--border-thick) solid var(--border-color);
@@ -63,6 +63,7 @@
   }
 
   .toast-close {
+    text-align: right;
     background: transparent;
     border: none;
     color: var(--overlay-white-80);
