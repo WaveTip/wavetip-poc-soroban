@@ -1,0 +1,154 @@
+/**
+ * Contract Information Card Styles
+ * 
+ * Clean, minimal layout with clickable links to block explorer.
+ * Uses JetBrains Mono for monospace addresses.
+ * No border-radius for seamless card integration.
+ */
+
+ @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&display=swap');
+
+ .contract-info-card {
+   background: var(--bg-elevated);
+   border: var(--border-thin) solid var(--border-color);
+   border-radius: 0;
+ }
+ 
+ .contract-header {
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   margin-bottom: var(--space-lg);
+   padding-bottom: var(--space-lg);
+   border-bottom: var(--border-thin) solid var(--border-color);
+ }
+ 
+ .contract-header h2 {
+   font-size: 18px;
+   font-weight: 700;
+   color: var(--text-primary);
+   margin: 0;
+ }
+ 
+ .network-badge {
+   display: inline-block;
+   padding: 6px 12px;
+   background: var(--wavetip-primary);
+   border-radius: var(--radius-pill);
+   font-size: 12px;
+   font-weight: 600;
+   color: var(--text-white);
+   text-transform: uppercase;
+   letter-spacing: 0.3px;
+ }
+ 
+ /* Contract List */
+ .contract-list {
+   display: flex;
+   flex-direction: column;
+   gap: var(--space-sm);
+ }
+ 
+ /* Clickable Contract Link */
+ .contract-link {
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   gap: var(--space-md);
+   padding: var(--space-md);
+   background: var(--bg-surface);
+   border-radius: var(--radius-md);
+   border: var(--border-thin) solid var(--border-color);
+   text-decoration: none;
+   transition: all var(--transition-fast);
+   cursor: pointer;
+ }
+ 
+ .contract-link:hover {
+    border: var(--border-thin) solid var(--wavetip-primary);
+    background: var(--bg-elevated);
+ }
+ 
+ /* Contract Label */
+ .contract-label {
+   font-size: 12px;
+   font-weight: 600;
+   color: var(--text-secondary);
+   text-transform: uppercase;
+   letter-spacing: 0.3px;
+   flex-shrink: 0;
+   min-width: 120px;
+ }
+ 
+ /* Contract Address - JetBrains Mono Font */
+ .contract-address {
+   flex: 1;
+   font-size: 13px;
+   font-weight: 600;
+   color: var(--wavetip-primary);
+   font-family: 'JetBrains Mono', 'Monaco', 'Courier New', monospace;
+   overflow: hidden;
+   text-overflow: ellipsis;
+   white-space: nowrap;
+   letter-spacing: 0.02em;
+ }
+ 
+ /* External Link Icon */
+ .external-icon {
+   font-size: 16px;
+   color: var(--text-tertiary);
+   flex-shrink: 0;
+   transition: all var(--transition-fast);
+ }
+ 
+ .contract-link:hover .external-icon {
+   color: var(--wavetip-primary);
+ }
+ 
+ /* ===== RESPONSIVE ===== */
+ @media (max-width: 768px) {
+   .contract-header {
+     flex-wrap: wrap;
+     gap: var(--space-md);
+   }
+ 
+   .contract-header h2 {
+     flex-basis: 100%;
+   }
+ 
+   .contract-label {
+     min-width: 80px;
+     font-size: 11px;
+   }
+ 
+   .contract-address {
+     font-size: 12px;
+   }
+ 
+   .contract-link {
+     padding: var(--space-sm);
+     gap: var(--space-sm);
+   }
+ }
+ 
+ @media (max-width: 480px) {
+   .contract-link {
+     flex-direction: column;
+     align-items: flex-start;
+   }
+ 
+   .contract-label {
+     width: 100%;
+   }
+ 
+   .contract-address {
+     width: 100%;
+     padding-top: var(--space-xs);
+     border-top: var(--border-thin) solid var(--border-color);
+   }
+ 
+   .external-icon {
+     display: none;
+   }
+ }
+ 

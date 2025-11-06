@@ -1,0 +1,112 @@
+/**
+ * WaveTip Soroban Application - Master Stylesheet
+ * 
+ * Complete styling system with Twitch-inspired streaming UI.
+ * Light theme with WaveTip brand colors.
+ * 
+ * Import order:
+ * 1. Base Styles (reset, variables, typography)
+ * 2. Component Styles (reusable UI elements)
+ * 3. Stream Styles (Twitch-inspired header)
+ * 4. Utilities (scrollbars, animations, accessibility)
+ */
+
+/* ===== BASE STYLES ===== */
+@import './base/reset.css';
+@import './base/variables.css';
+@import './base/typography.css';
+
+/* ===== COMPONENT STYLES ===== */
+@import './components/buttons.css';
+@import './components/cards.css';
+@import './components/contract-info.css';
+@import './components/forms.css';
+@import './components/loader.css';
+@import './components/banner.css';
+@import './components/toast.css';
+
+/* ===== SECTION STYLES ===== */
+@import './components/stream-layout.css';
+@import './components/wallet-section.css';
+@import './components/balance-card.css';
+@import './components/tip-buttons.css';
+@import './components/admin-panel.css';
+
+/* ===== STREAM HEADER ===== */
+@import './stream-header.css';
+
+/* Rest of styles... */
+
+
+/* ===== UTILITIES ===== */
+/* Scrollbars, animations, and utility styles */
+
+/**
+ * Custom Scrollbar Styling
+ * Light theme scrollbar for better UX
+ */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-surface);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: var(--radius-sm);
+  transition: background var(--transition-fast);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-tertiary);
+}
+
+/**
+ * Firefox Scrollbar Support
+ */
+* {
+  scrollbar-color: var(--text-tertiary) var(--bg-surface);
+  scrollbar-width: thin;
+}
+
+/**
+ * Selection Color
+ * Match WaveTip brand when users select text
+ */
+::selection {
+  background-color: var(--wavetip-primary);
+  color: white;
+}
+
+::-moz-selection {
+  background-color: var(--wavetip-primary);
+  color: white;
+}
+
+/**
+ * Focus Visible Styling
+ * Accessibility: Clear focus indication for keyboard users
+ */
+:focus-visible {
+  outline: 2px solid var(--wavetip-primary);
+  outline-offset: 2px;
+}
+
+/**
+ * Smooth Scroll Behavior
+ * Better UX for anchor links and programmatic scrolls
+ */
+html {
+  scroll-behavior: smooth;
+}
+
+/**
+ * Prevent Layout Shift on Scrollbar Toggle
+ * Ensures consistent layout when scrollbar appears/disappears
+ */
+body {
+  overflow-y: scroll;
+}

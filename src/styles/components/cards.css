@@ -1,0 +1,20 @@
+/**
+ * Card Component Styles
+ *
+ * Reusable card wrapper for content sections.
+ * No border-radius for seamless stacking - rounded corners handled by container.
+ * Clean separation with borders, not visual "stacking".
+ */
+
+.card {
+  background: var(--bg-elevated);
+  border: var(--border-thin) solid var(--border-color);
+  border-radius: 0;
+  padding: var(--space-lg);
+  transition: all var(--transition-fast);
+}
+
+.card:hover {
+  border-color: var(--border-color);
+  box-shadow: none;
+}

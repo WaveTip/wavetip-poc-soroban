@@ -1,0 +1,46 @@
+/**
+ * Tips Section Styles
+ * 
+ * Tip buttons and custom amount input layout.
+ */
+
+ .tip-info {
+    color: var(--text-secondary);
+    font-size: 14px;
+    margin-bottom: var(--space-lg);
+  }
+  
+  .tip-buttons {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: var(--space-md);
+    margin-bottom: var(--space-lg);
+  }
+  
+  .custom-tip {
+    display: flex;
+    gap: var(--space-md);
+  }
+  
+  .custom-tip input {
+    flex: 1;
+  }
+  
+  .custom-tip button {
+    flex-shrink: 0;
+  }
+  
+  @media (max-width: 640px) {
+    .tip-buttons {
+      grid-template-columns: 1fr;
+    }
+  
+    .custom-tip {
+      flex-direction: column;
+    }
+  
+    .custom-tip button {
+      width: 100%;
+    }
+  }
+  

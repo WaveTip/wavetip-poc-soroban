@@ -1,0 +1,89 @@
+/**
+ * Promotional Banner Styles
+ * 
+ * Thin dismissible banner with primary color background.
+ * Positioned at the top of the page.
+ */
+
+ .banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--wavetip-primary);
+    color: white;
+    padding: 10px var(--space-lg);
+    gap: var(--space-md);
+    position: relative;
+    z-index: var(--z-base);
+    min-height: 40px;
+  }
+  
+  .banner__content {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .banner__text {
+    font-size: 14px;
+    font-weight: 500;
+    text-align: center;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+  }
+ 
+  /* Logos layout */
+  .banner__logos {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+  }
+ 
+  .banner__logo {
+    display: block;
+    height: 24px;
+    width: auto;
+    /* Render external SVGs as white on colored banner */
+    filter: brightness(0) invert(1);
+  }
+
+  .banner__logo--stellar {
+    height: 24px;
+  }
+
+  .banner__logo--wavetip {
+    height: 28px;
+  }
+ 
+  .banner__divider {
+    display: inline-block;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1;
+    opacity: 0.9;
+    margin: 0 2px;
+  }
+  
+  /**
+   * Responsive
+   */
+  @media (max-width: 640px) {
+    .banner {
+      padding: 8px var(--space-md);
+      min-height: 36px;
+    }
+  
+    .banner__text {
+      font-size: 13px;
+    }
+ 
+    .banner__logo {
+      height: 16px;
+    }
+ 
+    .banner__divider {
+      font-size: 14px;
+    }
+  }
+  

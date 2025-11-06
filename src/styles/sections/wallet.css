@@ -1,0 +1,55 @@
+/**
+ * Wallet Section Styles
+ * 
+ * Wallet display and balance information.
+ */
+
+ .wallet-info {
+    margin-bottom: var(--space-lg);
+  }
+  
+  .wallet-info p {
+    margin: var(--space-md) 0 var(--space-sm);
+    color: var(--text-secondary);
+  }
+  
+  .wallet-address-container {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    margin: var(--space-md) 0;
+  }
+  
+  .wallet-address-container .address {
+    flex: 1;
+    min-width: 0;
+    word-break: break-all;
+    font-family: 'JetBrains Mono', 'SF Mono', Monaco, 'Courier New', monospace;
+    font-size: 12px;
+    color: var(--text-secondary);
+    background: var(--bg-surface);
+    padding: var(--space-sm);
+    border-radius: var(--radius-sm);
+  }
+  
+  .balance {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    padding: var(--space-md);
+    background: var(--bg-surface);
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    margin-top: var(--space-md);
+  }
+  
+  .balance-label {
+    color: var(--text-secondary);
+    font-size: 13px;
+  }
+  
+  .balance-amount {
+    color: var(--wavetip-primary);
+    font-size: 18px;
+  }
+  

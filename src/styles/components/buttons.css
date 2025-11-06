@@ -1,0 +1,100 @@
+/**
+ * Button Component Styles
+ * 
+ * All button variants used across the application.
+ * Follows WaveTip Brand Guidelines for consistency.
+ */
+
+ .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-xs);
+    border: none;
+    border-radius: var(--radius-pill);
+    padding: 14px 28px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    font-family: Poppins, sans-serif;
+    white-space: nowrap;
+    user-select: none;
+  }
+  
+  /* Primary Button */
+  .btn-primary {
+    background: var(--wavetip-primary);
+    color: white;
+  }
+  
+  .btn-primary:hover:not(:disabled) {
+    background: var(--wavetip-ocean);
+  }
+  
+  /* Secondary Button */
+  .btn-secondary {
+    background: transparent;
+    border: var(--border-thick) solid var(--border-color);
+    color: var(--text-primary);
+  }
+  
+  .btn-secondary:hover:not(:disabled) {
+    border-color: var(--wavetip-primary);
+    color: var(--wavetip-primary);
+    background: var(--color-info-10);
+  }
+  
+  /* Logout Button - Destructive Outline */
+  .btn-logout {
+    background: transparent;
+    border: var(--border-thick) solid var(--color-error);
+    color: var(--color-error);
+  }
+
+  .btn-logout:hover:not(:disabled) {
+    background: var(--color-error-10);
+    border-color: var(--color-error);
+    color: var(--color-error);
+  }
+  
+  /* Tip Button - WaveTip Blue (matches Twitch extension injection) */
+  .btn-tip {
+    background: #006afe;
+    color: #fff;
+    min-width: 120px;
+    height: 48px;
+  }
+
+  .btn-tip:hover:not(:disabled) {
+    background: #0056d6;
+  }
+  
+  /* Admin Button - Orange/Yellow Gradient */
+  .btn-admin {
+    background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+    color: var(--neutral-black);
+    font-weight: 600;
+  }
+  
+  /* Small Button */
+  .btn-small {
+    padding: 8px 16px;
+    font-size: 14px;
+  }
+  
+  /* Disabled State */
+  .btn:disabled {
+    background: var(--bg-surface);
+    color: var(--text-tertiary);
+    cursor: not-allowed;
+    opacity: 0.5;
+    transform: none;
+  }
+  
+  /* Active State */
+  .btn.active {
+    background: var(--wavetip-primary);
+    color: white;
+  }
+  
