@@ -33,15 +33,6 @@
     flex: 1;
   }
   
-  .stat-label {
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--text-secondary);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin-bottom: var(--space-xs);
-  }
-  
   .stat-value {
     font-size: 24px;
     font-weight: 700;

@@ -96,9 +96,6 @@
   flex-direction: column;
   min-width: 0;
 }
-.channel-info .stream-stats {
-  margin-top: 0;
-}
 
 .channel-name {
   display: flex;
@@ -173,8 +170,9 @@
 
 .stream-stats {
   display: flex;
+  align-items: flex-start;
   gap: var(--space-lg);
-  align-items: center;
+  flex-shrink: 0;
 }
 
 .stat-counter {
@@ -189,7 +187,6 @@
   font-weight: 600;
   color: var(--text-secondary);
   text-transform: uppercase;
-  letter-spacing: 0.3px;
 }
 
 .stat-value {
@@ -221,13 +218,14 @@
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: 4px;
+  gap: 5px;
 }
 
 .address-row {
   display: flex;
   align-items: center;
   gap: var(--space-xs);
+  transform: translateX(5px);
 }
 
 .address-code {
@@ -275,7 +273,7 @@
 .balance-value {
   font-size: 18px;
   font-weight: 700;
-  color: var(--text-primary);
+  color: var(--wavetip-primary);
 }
 
 /* ===== RESPONSIVE ===== */
@@ -286,10 +284,6 @@
 
   .stream-stats {
     gap: var(--space-md);
-  }
-
-  .stat-value {
-    font-size: 16px;
   }
 }
 
@@ -337,9 +331,5 @@
 
   .stat-label {
     font-size: 11px;
-  }
-
-  .stat-value {
-    font-size: 14px;
   }
 }

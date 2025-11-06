@@ -12,7 +12,6 @@
 
 // AdminPanel removed in favor of modal in stream header
 export { AdminModal } from './Shared/AdminModal';
-export { BalanceCard } from './BalanceCard';
 export { Banner } from './Banner';
 export { ContractInfo } from './ContractInfo';
 export { Loader } from './Shared/Loader';

@@ -93,7 +93,7 @@ export function truncateHash(hash: string, start = 5, end = 5): string {
   const prefix = hash.substring(0, start);
   const suffix = hash.substring(hash.length - end);
 
-  return `${prefix}....${suffix}`;
+  return `${prefix}...${suffix}`;
 }
 
 /**
@@ -110,5 +110,5 @@ export function truncateHash(hash: string, start = 5, end = 5): string {
  * // "GBRPYH....RDOQW"
  */
 export function truncateAddress(address: string): string {
-  return truncateHash(address, 6, 6);
+  return truncateHash(address, 6, 4);
 }
